@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background Colors */
+    --color-background: #0f0f0f; /* gray-950 */
+    --color-foreground: #f3f4f6; /* gray-100 */
+    --color-surface: #1f2937; /* gray-800 */
+    --color-surface-foreground: #f3f4f6; /* gray-100 */
+    
+    /* Card Colors */
+    --color-card: #1f2937; /* gray-800 */
+    --color-card-foreground: #f3f4f6; /* gray-100 */
+    
+    /* Popover Colors */
+    --color-popover: #1f2937; /* gray-800 */
+    --color-popover-foreground: #f3f4f6; /* gray-100 */
+    
+    /* Muted Colors */
+    --color-muted: #374151; /* gray-700 */
+    --color-muted-foreground: #9ca3af; /* gray-400 */
+    
+    /* Border and Input */
+    --color-border: rgba(75, 85, 99, 0.3); /* gray-600 with opacity */
+    --color-input: #1f2937; /* gray-800 */
+    --color-ring: #22d3ee; /* cyan-400 */
+    
+    /* Primary Colors */
+    --color-primary: #22d3ee; /* cyan-400 */
+    --color-primary-foreground: #0f0f0f; /* gray-950 */
+    
+    /* Secondary Colors */
+    --color-secondary: #34d399; /* emerald-400 */
+    --color-secondary-foreground: #0f0f0f; /* gray-950 */
+    
+    /* Accent Colors */
+    --color-accent: #06b6d4; /* cyan-600 */
+    --color-accent-foreground: #f3f4f6; /* gray-100 */
+    
+    /* Success Colors */
+    --color-success: #10b981; /* emerald-500 */
+    --color-success-foreground: #f3f4f6; /* gray-100 */
+    
+    /* Warning Colors */
+    --color-warning: #f59e0b; /* amber-500 */
+    --color-warning-foreground: #0f0f0f; /* gray-950 */
+    
+    /* Error/Destructive Colors */
+    --color-error: #ef4444; /* red-500 */
+    --color-error-foreground: #f3f4f6; /* gray-100 */
+    --color-destructive: #ef4444; /* red-500 */
+    --color-destructive-foreground: #f3f4f6; /* gray-100 */
+    
+    /* Radius */
+    --radius: 0.5rem;
+  }
+  
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  /* Glow effects for interactive elements */
+  .glow-hover {
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  
+  .glow-hover:hover {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  }
+  
+  /* Gradient borders */
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(90deg, #22d3ee, #34d399);
+    border-radius: var(--radius);
+    padding: 1px;
+  }
+  
+  .gradient-border-content {
+    background: var(--color-background);
+    border-radius: calc(var(--radius) - 1px);
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* Shimmer loading animation */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  /* Spring animation utility */
+  .spring-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Micro-interaction animations */
+  .micro-bounce {
+    animation: micro-bounce 0.2s ease-in-out;
+  }
+  
+  @keyframes micro-bounce {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+}
+
+@layer utilities {
+  /* Custom shadows for dark theme */
+  .shadow-card {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .shadow-modal {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Fluid typography */
+  .text-fluid-sm {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+  
+  .text-fluid-base {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  }
+  
+  .text-fluid-lg {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+  }
+  
+  .text-fluid-xl {
+    font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+  }
+  
+  .text-fluid-2xl {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+  }
+}
