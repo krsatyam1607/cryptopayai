@@ -1,98 +1,55 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
-import Button from '../../../components/ui/Button';
 
-const ChatInput = ({ onSendMessage, isLoading = false, disabled = false }) => {
-  const [message, setMessage] = useState('');
-  const textareaRef = useRef(null);
+const ChatInput = ({ onSendMessage, isLoading, onVoiceInput }) => {
+  const [input, setInput] = useState('');
 
-  const handleSubmit = (e) => {
-    e?.preventDefault();
-    if (message?.trim() && !isLoading && !disabled) {
-      onSendMessage(message?.trim());
-      setMessage('');
-      if (textareaRef?.current) {
-        textareaRef.current.style.height = 'auto';
-      }
-    }
+  const handleSend = () => {
+    if (!input.trim()) return;
+    onSendMessage(input);
+    setInput('');
   };
 
   const handleKeyPress = (e) => {
-    if (e?.key === 'Enter' && !e?.shiftKey) {
-      e?.preventDefault();
-      handleSubmit(e);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setMessage(e?.target?.value);
-    
-    // Auto-resize textarea
-    if (textareaRef?.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef?.current?.scrollHeight, 120)}px`;
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative">
-      <div className="flex items-end space-x-3 p-4 bg-gray-800 border border-gray-700 rounded-2xl">
-        {/* Attachment Button */}
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="flex-shrink-0 text-gray-400 hover:text-gray-300"
-          disabled={disabled}
-        >
-          <Icon name="Paperclip" size={20} />
-        </Button>
+    <div className="flex items-center bg-gray-800 border border-gray-700 rounded-2xl p-3 focus-within:border-emerald-400 transition-all duration-200">
+      <textarea
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyPress}
+        placeholder="Ask your assistant anything..."
+        rows={1}
+        className="flex-1 bg-transparent text-gray-200 text-sm resize-none focus:outline-none px-2"
+      />
 
-        {/* Message Input */}
-        <div className="flex-1 relative">
-          <textarea
-            ref={textareaRef}
-            value={message}
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask me about payments, transactions, or USDC management..."
-            disabled={disabled || isLoading}
-            className="
-              w-full bg-transparent text-gray-100 placeholder-gray-400
-              resize-none border-0 outline-none
-              min-h-[24px] max-h-[120px] leading-6
-              disabled:opacity-50 disabled:cursor-not-allowed
-            "
-            rows={1}
-          />
-        </div>
-
-        {/* Send Button */}
-        <Button
-          type="submit"
-          size="icon"
-          disabled={!message?.trim() || isLoading || disabled}
-          className="
-            flex-shrink-0 bg-gradient-to-r from-cyan-400 to-emerald-400 
-            hover:from-cyan-500 hover:to-emerald-500
-            disabled:from-gray-600 disabled:to-gray-600
-            disabled:opacity-50 disabled:cursor-not-allowed
-          "
+      <div className="flex items-center space-x-2">
+        <button
+          onClick={onVoiceInput}
+          className="text-gray-400 hover:text-gray-200 transition"
+          title="Speak to Assistant"
         >
-          {isLoading ? (
-            <Icon name="Loader2" size={20} className="animate-spin text-gray-950" />
-          ) : (
-            <Icon name="Send" size={20} className="text-gray-950" />
-          )}
-        </Button>
+          <Icon name="Mic" size={18} />
+        </button>
+
+        <button
+          onClick={handleSend}
+          disabled={isLoading}
+          className={`rounded-full p-2 transition-all ${
+            isLoading
+              ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+              : 'bg-emerald-500 hover:bg-emerald-600 text-gray-900'
+          }`}
+        >
+          <Icon name="Send" size={16} />
+        </button>
       </div>
-      {/* Character count indicator */}
-      {message?.length > 200 && (
-        <div className="absolute -top-6 right-0 text-xs text-gray-400">
-          {message?.length}/500
-        </div>
-      )}
-    </form>
+    </div>
   );
 };
 

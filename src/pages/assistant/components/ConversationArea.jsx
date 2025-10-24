@@ -27,7 +27,7 @@ const ConversationArea = ({ messages, isTyping = false }) => {
             </svg>
           </div>
           <h3 className="text-xl font-semibold text-gray-100 mb-2">
-            Welcome to CryptoPayAI Assistant
+            Welcome to Solaris - A CryptoPayAI Assistant
           </h3>
           <p className="text-gray-400 max-w-md leading-relaxed">
             I'm here to help you with USDC payments, transaction explanations, scheduling assistance, and cryptocurrency best practices. Ask me anything!
